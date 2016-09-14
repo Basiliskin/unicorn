@@ -1,0 +1,280 @@
+	<div class="uk-grid"><!-- MAIN CONTENT -->
+		<div class="uk-width-1-1"><!-- Chapter List -->
+			<ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#help_content', animation: 'slide-vertical'}">
+				<li><a href="">Book Settings</a></li>
+				<li><a href="">Editor</a></li>
+				<li><a href="">Chapter</a></li>
+				<li><a href="">Note</a></li>
+				<li><a href="">Library</a></li>
+			</ul>
+			<ul id="help_content" class="uk-switcher">
+				<li><!-- BOOK -->
+					<table>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td class="bold_column">Name</td>
+										<td class="desc_column">
+											To change name of book click on <span class="book_name">Book Title</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Book Title</td>
+										<td class="desc_column">
+											Book name.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Language</td>
+										<td class="desc_column">
+											Language of text in book.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Author</td>
+										<td class="desc_column">
+											Author of book.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Description</td>
+										<td class="desc_column">
+											Short description of book.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Save</td>
+										<td class="desc_column">
+											Save changes.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Close</td>
+										<td class="desc_column">
+											Discard changes.
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li><!-- EDITOR -->
+					<table>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-life-saver"></i>
+										</td>
+										<td class="desc_column">
+											Help Window
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-group"></i>
+										</td>
+										<td class="desc_column">
+											Add Item to Library,only visible when there is selected chapter,from chapter list.
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-save"></i>
+										</td>
+										<td class="desc_column">
+											Save changes in editor to selected,current,Chapter.
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-archive"></i>
+										</td>
+										<td class="desc_column">
+											Download Book.Downloaded file will contain two files,unicorn json object and book in FB2 format.
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-download"></i>
+										</td>
+										<td class="desc_column">
+											Load Book from file.Support FB2 and Zipped FB2 books.
+											<a href="unicorn_book_2208_1638.zip">Demo Book(saved with Unicorn)</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-print"></i>
+										</td>
+										<td class="desc_column">
+											Print Book.
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-plus"></i>
+										</td>
+										<td class="desc_column">
+											Add Chapter to Book.
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<i class="uk-icon-hover uk-icon-small uk-icon-sticky-note"></i>
+										</td>
+										<td class="desc_column">
+											Add Note to Book or Chapter.
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li><!-- CHAPTER -->
+					<table>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td class="bold_column">Title</td>
+										<td class="desc_column">
+											Name of Chapter.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Color</td>
+										<td class="desc_column">
+											Color of help tooltip.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Description</td>
+										<td class="desc_column">
+											Description which will be shown in help tooltip.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Save</td>
+										<td class="desc_column">
+											Save changes,create new chapter and select it or update existed chapter.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Close</td>
+										<td class="desc_column">
+											Discard changes.
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li><!-- NOTE -->
+					<table>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td class="bold_column">Title</td>
+										<td class="desc_column">
+											Note name.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Color</td>
+										<td class="desc_column">
+											Color of help tooltip.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Description</td>
+										<td class="desc_column">
+											Description which will be shown in help tooltip.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Attach To</td>
+										<td class="desc_column">
+											Note can be assigned to specific chapter and will be visible in Note list only when specific chapter selected.<br>
+											if not assigned to any chapter note is global and will be visible permanently.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Save</td>
+										<td class="desc_column">
+											Create new or update existed Note.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Close</td>
+										<td class="desc_column">
+											Discard changes.
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li><!-- LIBRARY -->
+					<table>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td class="bold_column">Title</td>
+										<td class="desc_column">
+											Name of Item in Library.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Type</td>
+										<td class="desc_column">
+											Item type.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Avatar</td>
+										<td class="desc_column">
+											Image for Item.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Description</td>
+										<td class="desc_column">
+											Description
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Save</td>
+										<td class="desc_column">
+											Create new item or update existed item,not copied to other chapter.
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Add</td>
+										<td class="desc_column">
+											Same as Save,but instead of saving item in parent chapter ,it copied to selected chapter (if exist updated.)
+										</td>
+									</tr>
+									<tr>
+										<td class="bold_column">Close</td>
+										<td class="desc_column">
+											Discard changes.
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+			<button id="btn_close">Close</button>
+		</div>	
+	</div>

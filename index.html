@@ -1,0 +1,460 @@
+<html>
+  <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Unicorn - Book Writer, v1</title>
+	
+    <script type="text/javascript" src="js/knockout-3.4.0.js"></script>
+
+	<link id="data-uikit-theme" rel="stylesheet" href="js/uikit.docs.min.css">
+	<link rel="stylesheet" href="js/highlight.css">
+	<script src="js/jquery-1.12.2.min.js"></script>
+	<script src="js/uikit.min.js"></script>
+	
+	<link rel="stylesheet" href="js/codemirror.css">
+	<link rel="stylesheet" href="js/show-hint.css">
+	<link rel="stylesheet" href="js/htmleditor.css">
+
+	
+	<link rel='stylesheet' href='js/spectrum.css' />
+	<link rel='stylesheet' href='index.css' />
+
+	</head>
+  <body>
+	
+	<input type="file" id="openFile" style="width:1px;height:1px;position:absolute;left:-10px;">
+
+	<div style="display:none;"><!-- dialogs -->
+		<div id="pdfToPrint"></div>
+		
+		<div id="helpLibrary" class="dtemplate">	
+			<h3 >Library</h3>
+			Add new item to current Chapter,add/save by pressing <b>Save</b> button.<br>
+			Later you can edit it by pressing on icon in Library.<br>
+			Or you can copy,same item,but with different data to other chapter.<br>
+			Select chapter,click on Item in Library,change what needed and press "Add" button.
+			
+		</div>
+		<div id="helpLeft" class="dtemplate">	
+			<h3 >Left</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpRight" class="dtemplate">	
+			<h3 >Right</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpCenter" class="dtemplate">	
+			<h3 >Center</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpChapter" class="dtemplate">	
+			<h3 >Save Chapter</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpBold" class="dtemplate">	
+			<h3 >Bold</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpItalic" class="dtemplate">	
+			<h3 >Italic</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpStrike" class="dtemplate">	
+			<h3 >Strike</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpFullscreen" class="dtemplate">	
+			<h3 >Fullscreen</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpNewChapter" class="dtemplate">	
+			<h3 >Create New Chapter</h3>
+			Add new Chapter to Book,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpNewNote" class="dtemplate">			
+			<h3 >Create New Note</h3>
+			Add new Note to Book or Chapter,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpSave" class="dtemplate">			
+			<h3 >Save</h3>
+			Add new Note to Book or Chapter,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpLoad" class="dtemplate">			
+			<h3 >Load</h3>
+			Add new Note to Book or Chapter,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpPrint" class="dtemplate">			
+			<h3 >Print</h3>
+			Add new Note to Book or Chapter,add by pressing <b>Save</b> button.
+		</div>
+		<div id="helpBookInfo" class="dtemplate">			
+			<h3 >Book information settings</h3>
+			Change book information by pressing <b>Save</b> button.
+		</div>
+		
+		<div id="DynamicSettings" class="dtemplate">
+			<form class="uk-form">
+				<fieldset>
+					<div class="uk-form-row">
+						<div class="uk-grid">
+							<div class="uk-width-2-4">
+								<label class="uk-form-label" for="" data-bind="text:txtDialog1"></label>
+								<div class="uk-form-controls">
+									<input type="text" class="uk-form-small"  data-bind="attr: {placeholder: txtDialog1},value:txtTemp1">
+								</div>
+							</div>
+							<div class="uk-width-2-4" data-bind="visible: is_attachable">
+								<label class="uk-form-label" for="">Attach To:</label>
+								<div class="uk-form-controls">
+									<select data-bind="foreach: getAttachment(), value: selectedAttachment">
+										<option data-bind="text: title, attr: { value: id }"></option>
+									</select>
+                                </div>
+							</div>
+                        </div>
+						<div class="uk-grid">
+							<div class="uk-width-1-1">
+								<label class="uk-form-label" for="">Background</label>
+								<div class="uk-form-controls">
+									<input type='text' class="color_picker_full"/>
+								</div>
+							</div>
+                        </div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for=""  data-bind="text:txtDialog2"></label>
+						<div class="uk-form-controls">
+							<textarea id='txtData' data-bind="attr: {placeholder: txtDialog2},text:txtTemp2">
+							</textarea>
+						</div>
+					</div>
+					<div class="uk-form-row">
+						<div class="uk-form-controls">
+							<button class="uk-button"  data-bind="click: SaveDialog.bind($data,false,$data)">Save</button>
+							<button class="uk-button"  data-bind="click: SaveDialog.bind($data,'close',$data)">Close</button>
+							<button class="uk-button"  data-bind="visible:currentObject,click: RemoveObject">Remove</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div id="LibrarySettings" class="dtemplate">
+			<form class="uk-form">
+				<fieldset>
+					<div class="uk-form-row">
+						<div class="uk-grid">
+							<div class="uk-width-2-4">
+								<label class="uk-form-label" for="">Title</label>
+								<div class="uk-form-controls">
+									<input  id="itemTitle" type="text" class="uk-form-small" placeholder="Title" data-bind="value:txtTemp1">
+								</div>
+							</div>
+							<div class="uk-width-2-4">
+								<label class="uk-form-label" for="">Type:</label>
+								<div class="uk-form-controls">
+									<select data-bind="foreach: GetItemType(), value: selectedAttachment" id="itemType">
+										<option data-bind="text: title, attr: { value: id }"></option>
+									</select>
+                                </div>
+							</div>
+                        </div>
+						<div class="uk-grid">
+							<div class="uk-width-1-1">
+								<input id="fileUpload" type="file" placeholder="Image" class="uk-form-small upload_image" style="width:0px;height:0px" 
+									xattr="img_holder,gif,png,jpg,jpeg">
+								<label class="uk-form-label" for="">Avatar</label>
+								<div class="uk-form-controls">
+								<a class="uk-thumbnail" href="">
+									<div>
+										<img id="img_holder" style="width:120px;height:120px" xattr="120,120" data-bind="click:selectImage,attr: { src: txtTemp2 }">
+									</div>
+								</a>
+								</div>
+							</div>
+                        </div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="" >Description</label>
+						<div class="uk-form-controls">
+							<textarea id="itemDesc" placeholder="Description" data-bind="text:txtTemp3">
+							</textarea>
+						</div>
+					</div>
+					<div class="uk-form-row">
+						<div class="uk-form-controls">
+							<button class="uk-button"  data-bind="click: AddToChapter.bind($data,$data,true)">Save</button>
+							<button class="uk-button"  data-bind="visible:currentObject,click: AddToChapter.bind($data,$data,false)">Add</button>
+							<button class="uk-button"  data-bind="click: SaveDialog.bind($data,'close',$data)">Close</button>
+							<button class="uk-button"  data-bind="visible:currentObject,click: RemoveObject">Remove</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div id="BookSettings" class="dtemplate">
+			<form class="uk-form">
+				<fieldset>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="">Language</label>
+						<div class="uk-form-controls">
+							<input type="text" placeholder="Book Language" class="uk-form-small" data-bind="value:txtTemp4">
+						</div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="">Book Title</label>
+						<div class="uk-form-controls">
+							<input type="text" placeholder="Book Title" class="uk-form-small" data-bind="value:txtTemp1">
+						</div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="">Author</label>
+						<div class="uk-form-controls">
+							<input type="text" placeholder="Author Name" class="uk-form-small" data-bind="value:txtTemp2">
+						</div>
+					</div>
+					<div class="uk-form-row">
+						<label class="uk-form-label" for="">Description</label>
+						<div class="uk-form-controls">
+							<textarea type="text" placeholder="Description" class="uk-form-small" data-bind="value:txtTemp3"></textarea>
+						</div>
+					</div>
+					<div class="uk-form-row">
+						<div class="uk-form-controls">
+							<button class="uk-button"  data-bind="click: SaveDialog.bind($data, 'book')">Save</button>
+							<button class="uk-button"  data-bind="click: SaveDialog.bind($data, 'close')">Close</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div id="loadingSpinner" class="dtemplate">
+			<div id="floatBarsG">
+				<div id="floatBarsG_1" class="floatBarsG"></div>
+				<div id="floatBarsG_2" class="floatBarsG"></div>
+				<div id="floatBarsG_3" class="floatBarsG"></div>
+				<div id="floatBarsG_4" class="floatBarsG"></div>
+				<div id="floatBarsG_5" class="floatBarsG"></div>
+				<div id="floatBarsG_6" class="floatBarsG"></div>
+				<div id="floatBarsG_7" class="floatBarsG"></div>
+				<div id="floatBarsG_8" class="floatBarsG"></div>
+			</div>
+		</div>
+		<div id="tipHelp" class="dtemplate">			
+			<h3 >Help</h3>
+			The tooltip content is from another element in the page. This approach is <b>Search Engine Friendly</b>.
+		</div>
+		
+		<div id="DynamicHelp" style="width:300px" class="dtemplate">
+			<div class="uk-grid">
+				<div class="uk-width-1-1 uk-container-center">
+					<h3 data-bind="text:currentTitle"></h3>
+					<div  data-bind="html:currentHelp"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div  id="OffScreenPanel" style="position:absolute;left:-10000px;" >
+			<textarea id='offscreen_Editor'></textarea>
+		</div>
+		<div id="printBook">
+		</div>
+	</div>
+	
+	<div><!-- HEADER -->
+		<div class="uk-grid">
+			<div class="uk-width-1-10"><!-- TOOLBAR -->
+			 </div>
+			 <div class="uk-width-8-10 uk-container-center">
+				<div class="uk-grid">
+					<div class="uk-width-1-1">
+						<a href="index.html"><img src="logo.png" style="display: block;margin-left: auto; margin-right: auto;"></a>
+					</div>
+				</div>
+			 </div>
+			 <div class="uk-width-1-10">
+				 <div class="uk-clearfix">
+					<div class="uk-float-right">
+						<a href="#" data-bind="css: { active_icon : is_help_on },click: SwitchHelpMode" class="uk-icon-hover uk-icon-small uk-icon-question-circle" ></a>
+					</div>					
+				 </div>
+			 </div>
+		</div>
+		<div class="uk-grid">
+			<div class="uk-width-1-1">
+				 <a href="#" data-bind="click: OpenDialog.bind($data, 'book',null)"  data-pos="below"  data-help="help BookInfo" >
+					<div class="book_name">
+						<h4 style="color:black" class="uk-text-center" data-bind="text:txtName">Book Name</h4>
+						<h5 style="color:black" class="uk-text-center" data-bind="text:txtAuthor">Author Name</h5>
+					</div>
+				 </a>
+			</div>
+		 </div>
+	</div>
+	
+	<div class="uk-grid"><!-- MAIN CONTENT -->
+		<div data-bind="visible:show_Chapters,css: { 'uk-width-2-10' : show_Chapters }"><!-- Chapter List -->
+			Chapters
+			<div style="overflow:auto; height:300px;width:100%;margin:10px">
+			<div class="uk-grid">
+				<div class="uk-width-1-1">
+					<ul class="uk-nav" data-bind="foreach: Chapters">
+						<li >
+							<div class="uk-grid">
+								<div class="uk-width-4-5">
+									<a href="#"  data-bind="click: $parent.SetChapter.bind($data,$data,false)" ><span data-bind="text:$parent.GetTitle(title)"></span></a>
+								</div>
+								<div class="uk-width-1-5">
+									<a href="#" data-bind="click: $parent.ShowToolTip.bind($data, 'chapter',event,$data)"  class="uk-icon-hover uk-icon-small uk-icon-info"></a>
+									<a href="#" data-bind="click: $parent.OpenDialog.bind($data, 'chapter',$data)"  class="uk-icon-hover uk-icon-small uk-icon-edit"></a>
+								</div>
+							</div>
+							
+						</li>
+					</ul>
+				</div>	
+			</div>	
+			</div>	
+		</div>	
+		<div data-bind="css: getEditorWidth"><!-- Main Editor -->
+			<div class="mainEditor" style="display:none">
+				<textarea id="mainEditor" data-bind="text:CurrentChapter">
+				</textarea>
+			</div>
+		</div>	
+		<div data-bind="visible:show_Notes,css: { 'uk-width-1-10' : show_Notes }"><!-- Note List -->
+			Notes
+
+			<div class="uk-grid">
+				<div class="uk-width-1-1">
+					<ul class="uk-nav" data-bind="foreach: NoteList">
+						<li >
+							<div class="uk-grid">
+								<div class="uk-width-1-4">
+									<a href="#" data-bind="click: $parent.OpenDialog.bind($data, 'note',$data)"  class="uk-icon-hover uk-icon-small uk-icon-edit"></a>
+								</div>
+								<div class="uk-width-3-4">
+									<a href="#" data-bind="text:title,click: $parent.ShowToolTip.bind($data, 'note',event,$data)"></a>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>	
+			</div>	
+		</div>	
+	</div>
+	<div   data-bind="visible:show_Items"> <!-- Library -->
+<ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#my-id-one', animation: 'slide-vertical'}">
+    <li><a href="">Search</a></li>
+    <li><a href="">Library</a></li>
+    <li><a href="" data-bind="click: UpdateStats">Statistics</a></li>
+</ul>
+<!-- These are the containers of the content items -->
+<ul id="my-id-one" class="uk-switcher">
+    <li><!-- Search -->
+		<div class="uk-grid">
+			<div class="uk-width-2-10">
+				<input type="text"  placeholder="Search text here" class="uk-form-success"  
+					data-bind="value:SearchWord, event: {keypress: onSearch}">
+			</div>
+			<div class="uk-width-8-10">
+				<div class="uk-grid">
+					<div class="uk-width-2-10">Chapter</div>
+					<div class="uk-width-2-10">Line</div>
+					<div class="uk-width-6-10">Text</div>
+				</div>
+				<div style="overflow:auto; height:200px;width:100%;margin:10px" data-bind="foreach: Search">
+					<a href="#" data-bind="click:$parent.SetChapter(chapter,false,$data)">
+					<div class="uk-grid" >
+						<div class="uk-width-2-10"><span data-bind="text:$parent.GetTitle(chapter.title)"/></div>
+						<div class="uk-width-2-10"><span data-bind="text:line"/></div>
+						<div class="uk-width-6-10"><span data-bind="html:text"/></div>
+					</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</li>
+    <li><!-- Library -->
+		<div style="overflow:auto; height:200px;width:100%;margin:10px">
+			<table class="uk-text-center uk-text-top">
+				<tr  data-bind="foreach: ItemTable">
+					<td valign="top" align="center">
+						<div style="margin: auto;">
+							<span data-bind="text: $parent.GetChapterTitle(id)"></span>
+							<div data-bind="foreach: items">
+								<div class="uk-grid" >
+									<div class="uk-width-1-1 uk-container-center">
+										<div class="icons" >
+											<a href="#" data-bind="click:$root.ShowItem.bind($data,$data,$parent.id)">
+												<img data-bind="attr:{ title: title ,src:img }" >
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</li>
+    <li><!-- Statistics -->
+		<div class="uk-grid">
+			<div class="uk-width-4-10">Chapter</div>
+			<div class="uk-width-2-10">Words</div>
+			<div class="uk-width-2-10">Chapter Ratio</div>
+			<div class="uk-width-2-10">Precent of Book</div>
+		</div>
+		<div style="overflow:auto; height:200px;width:100%;margin:10px" data-bind="foreach: BookStats">
+			<div class="uk-grid" >
+				<div class="uk-width-4-10"><span data-bind="text:title"/></div>
+				<div class="uk-width-2-10"><span data-bind="text:count"/></div>
+				<div class="uk-width-2-10"><span data-bind="text:ratio"/></div>
+				<div class="uk-width-2-10"><span data-bind="html:precent"/></div>
+			</div>
+		</div>
+	</li>
+</ul>
+	</div>
+<div id="dynamicDialog" style="display:none;">
+		<div class="dialogOverlay"></div>
+		<div class="dialogWrapper" style="visibility: visible;">
+			<div class="dialogHint">
+				<div class="dialogInner" >
+					<h3 class="uk-text-center" data-bind="text:appName"></h3>
+					<div id="dialogContent">
+							pl
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+
+<div id="tooltipWrapperTmpl" class="tooltipWrapper" style="top: 400px; left: 0px;">
+	<div class="tooltipHint" style="width: 500px; height: 71px;">
+		<div class="tooltipInner" style="width: 500px; height: 71px; ">
+			<div class="tooltipContent">			
+			</div>
+		</div>
+	</div>
+</div>
+	
+	<script src="model.js"></script>
+	<script src="js/highlight.js"></script>
+	<script src="js/codemirror.js"></script>
+	<script src="js/marked.min.js"></script>
+	<script src="js/htmleditor.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src='js/spectrum.js'></script>
+	<script src='js/xml2json.min.js'></script>
+	
+	
+	<script src="js/jszip.min.js"></script>
+	<script src="js/jdoc.0.1.0.js"></script>
+	<script src="js/FileSaver.min.js"></script>
+	<script src="js/jQuery.print.js"></script>
+  </body>
+</html>
