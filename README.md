@@ -3,6 +3,20 @@ FB2 Book Writer
 * Fb2 Book Reader/Writer - with chapter/notes/chapter library tree...
 * <a href="http://caragulak.nsupdate.info/proj/unicorn/index.html">Demo</a>
 * 
+
+Requirements/Dependencies:
+* knockout
+* jquery
+* uikit
+* codemirror
+* spectrum
+* xml2json
+* jszip
+* jdoc
+* FileSaver
+* jQuery.print
+
+
 MIT License
 
 Copyright (c) [year] [fullname]
